@@ -1,4 +1,5 @@
 from __future__ import print_function
+from cProfile import label
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -25,7 +26,7 @@ def main():
 
     model = ElasticNet(degree=15, 
                         reg_factor=0.01,
-                        l1_ratio=0.7,
+                        l1_ratio=1.7,
                         learning_rate=0.001,
                         n_iterations=4000)
     model.fit(X_train, y_train)
@@ -58,6 +59,17 @@ def main():
     plt.ylabel('Temperature in Celcius')
     plt.legend((m1, m2), ("Training data", "Test data"), loc='lower right')
     plt.show()
+
+
+    m1 = plt.scatter(y_test, y_pred, label = 'test', color = cmap(0.5))
+    plt.plot([y_test.min(),y_test.max()], [y_test.min(),y_test.max()], label = 'y=x', color = 'black')
+    plt.suptitle("Elastic Net")
+    plt.title("Y-true vs Y-predict %.2f" % mse, fontsize=10)
+    plt.xlabel('Y-true')
+    plt.ylabel('Y_predict')
+    plt.legend( loc='lower right')
+    plt.show()
+
 
 if __name__ == "__main__":
     main()
